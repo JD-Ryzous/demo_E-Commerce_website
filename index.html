@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryzous Store | Premium Tech & Lifestyle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            white: '#ffffff',
+                            light: '#f5f5f7',
+                            blue: '#0066cc',
+                            glow: '#3b82f6',
+                            black: '#1d1d1f',
+                            gray: '#6e6e73'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Premium Light-Theme CSS */
+        body {
+            background-color: #ffffff;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism - Light Premium Optimized */
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hover & Luxury Animations */
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -15px rgba(0, 102, 204, 0.08);
+            border-color: rgba(0, 102, 204, 0.2);
+        }
+
+        .btn-glow {
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0066cc;
+            border-radius: 4px;
+        }
+
+        /* Hero Background Gradient Animation */
+        .hero-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 102, 204, 0.06) 0%, rgba(255, 255, 255, 1) 70%);
+        }
+
+        /* Image Zoom Effect */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+        .img-zoom {
+            transition: transform 0.6s ease;
+        }
+        .product-card:hover .img-zoom {
+            transform: scale(1.06);
+        }
+
+        /* Toast Animation */
+        @keyframes slideUp {
+            from { bottom: -50px; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+        .toast-show {
+            animation: slideUp 0.3s forwards;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-blue selection:text-white">
+
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold tracking-tighter text-brand-black">
+                RYZOUS<span class="text-brand-blue">.</span>
+            </a>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-sm font-medium text-brand-black hover:text-brand-blue transition-colors">Home</a>
+                <a href="#categories" class="text-sm font-medium text-brand-gray hover:text-brand-blue transition-colors">Categories</a>
+                <a href="#featured" class="text-sm font-medium text-brand-gray hover:text-brand-blue transition-colors">Shop</a>
+                <a href="#reviews" class="text-sm font-medium text-brand-gray hover:text-brand-blue transition-colors">Reviews</a>
+            </nav>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden sm:flex items-center bg-[#f5f5f7] rounded-full px-4 py-2 border border-gray-200 focus-within:border-brand-blue focus-within:bg-white transition-all">
+                    <i class="fa-solid fa-search text-brand-gray text-sm"></i>
+                    <input type="text" placeholder="Search products..." class="bg-transparent border-none outline-none text-sm text-brand-black ml-2 w-40">
+                </div>
+                
+                <button class="text-brand-gray hover:text-brand-black transition-colors relative">
+                    <i class="fa-regular fa-heart text-xl"></i>
+                </button>
+                
+                <button class="text-brand-gray hover:text-brand-black transition-colors relative group">
+                    <i class="fa-solid fa-cart-shopping text-xl group-hover:text-brand-blue transition-colors"></i>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-brand-blue text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section id="hero" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-bg min-h-[90vh] flex items-center">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-semibold tracking-wider mb-6">NEXT-GEN RETAIL EXPERIENCE</span>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-brand-black mb-6 leading-tight">
+                Discover the <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-600">Future</span><br> of Shopping
+            </h1>
+            <p class="text-brand-gray text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Experience unparalleled design and performance. Premium tech, curated aesthetics, and seamless minimalism delivered to your door.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#featured" class="bg-brand-blue text-white px-8 py-4 rounded-full font-medium btn-glow w-full sm:w-auto text-center shadow-lg shadow-brand-blue/20">
+                    Shop Collection
+                </a>
+                <a href="#categories" class="glass text-brand-black px-8 py-4 rounded-full font-medium hover:bg-gray-50 transition-colors w-full sm:w-auto text-center">
+                    Explore Categories
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="categories" class="py-20 bg-brand-light border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div class="glass rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white transition-all shadow-sm group">
+                    <div class="w-16 h-16 rounded-full bg-brand-blue/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-microchip text-2xl text-brand-blue"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-brand-black">Electronics</h3>
+                </div>
+                <div class="glass rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white transition-all shadow-sm group">
+                    <div class="w-16 h-16 rounded-full bg-brand-blue/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shirt text-2xl text-brand-blue"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-brand-black">Fashion</h3>
+                </div>
+                <div class="glass rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white transition-all shadow-sm group">
+                    <div class="w-16 h-16 rounded-full bg-brand-blue/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-headphones text-2xl text-brand-blue"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-brand-black">Accessories</h3>
+                </div>
+                <div class="glass rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white transition-all shadow-sm group">
+                    <div class="w-16 h-16 rounded-full bg-brand-blue/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gamepad text-2xl text-brand-blue"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-brand-black">Gaming</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-2">Featured Artifacts</h2>
+                    <p class="text-brand-gray text-sm md:text-base">Precision engineering meets aesthetic perfection.</p>
+                </div>
+                <a href="#" class="text-brand-blue hover:text-brand-black transition-colors text-sm font-medium hidden md:block">View All <i class="fa-solid fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-24 bg-brand-light border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">Architects of Change</h2>
+                <p class="text-brand-gray">What our visionary clients say about Ryzous.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-3xl bg-white/80 shadow-sm">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-gray mb-6 leading-relaxed">"The aesthetic and build quality of the audio core gear is unparalleled. It feels like stepping into the future. Seamless purchasing experience."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">AT</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-brand-black">Alex Trenton</h4>
+                            <p class="text-xs text-brand-gray">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl bg-white relative transform md:-translate-y-4 shadow-md border-brand-blue/20">
+                    <div class="absolute -top-3 right-8 bg-brand-blue text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full">Featured</div>
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-gray mb-6 leading-relaxed">"Ryzous isn't just a store; it's a lifestyle upgrade. The mechanical keyboard I ordered has completely transformed my minimal desk setup."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">SC</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-brand-black">Sarah Chen</h4>
+                            <p class="text-xs text-brand-gray">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl bg-white/80 shadow-sm">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p class="text-brand-gray mb-6 leading-relaxed">"Fast shipping, premium packaging, and exactly as described. The glassmorphism UI of the site translates perfectly to their product quality."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">MR</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-brand-black">Marcus Reed</h4>
+                            <p class="text-xs text-brand-gray">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 relative overflow-hidden border-t border-gray-100 bg-white">
+        <div class="absolute inset-0 bg-brand-blue/[0.02]"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <h2 class="text-3xl font-bold text-brand-black mb-4">Join The Ecosystem</h2>
+            <p class="text-brand-gray mb-8">Subscribe to receive priority access to new hardware drops, exclusive concepts, and insider updates.</p>
+            <form class="flex flex-col sm:flex-row max-w-xl mx-auto gap-3" onsubmit="event.preventDefault(); alert('Subscribed to Ryzous Network.');">
+                <input type="email" placeholder="Enter your email address" required class="flex-1 bg-brand-light border border-gray-200 rounded-full px-6 py-4 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all text-brand-black">
+                <button type="submit" class="bg-brand-black text-white px-8 py-4 rounded-full font-semibold hover:bg-brand-blue transition-colors duration-300 shadow-md">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-brand-light border-t border-gray-200 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div>
+                <a href="#" class="text-2xl font-bold tracking-tighter text-brand-black mb-6 block">
+                    RYZOUS<span class="text-brand-blue">.</span>
+                </a>
+                <p class="text-brand-gray text-sm leading-relaxed mb-6">
+                    Redefining digital retail through minimalistic design, premium curation, and futuristic functionality.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-brand-blue hover:text-white hover:border-brand-blue transition-all text-brand-gray"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-brand-blue hover:text-white hover:border-brand-blue transition-all text-brand-gray"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-brand-blue hover:text-white hover:border-brand-blue transition-all text-brand-gray"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-6 text-brand-black">Shop</h4>
+                <ul class="space-y-4 text-sm text-brand-gray">
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">All Products</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">New Arrivals</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Limited Editions</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Gift Cards</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-6 text-brand-black">About Us</h4>
+                <ul class="space-y-4 text-sm text-brand-gray">
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Our Story</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Careers</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Sustainability</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Press</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-6 text-brand-black">Support</h4>
+                <ul class="space-y-4 text-sm text-brand-gray">
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Shipping & Returns</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">FAQ</a></li>
+                    <li><a href="#" class="hover:text-brand-blue transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-gray-200 text-center flex flex-col md:flex-row justify-between items-center text-sm text-brand-gray">
+            <p>&copy; 2026 Ryzous Store. All rights reserved.</p>
+            <div class="flex space-x-4 mt-4 md:mt-0 opacity-70">
+                <i class="fa-brands fa-cc-visa text-2xl hover:text-brand-black transition-colors"></i>
+                <i class="fa-brands fa-cc-mastercard text-2xl hover:text-brand-black transition-colors"></i>
+                <i class="fa-brands fa-cc-apple-pay text-2xl hover:text-brand-black transition-colors"></i>
+            </div>
+        </div>
+    </footer>
+
+    <div id="quick-view-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="bg-white w-[90%] max-w-4xl max-h-[90vh] rounded-3xl relative z-10 overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-100 transform scale-95 transition-transform duration-300" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-brand-light border border-gray-200 rounded-full flex items-center justify-center hover:bg-brand-blue hover:text-white hover:border-brand-blue transition-all z-20 text-brand-black">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-full md:w-1/2 h-64 md:h-auto bg-brand-light p-8 flex items-center justify-center border-r border-gray-100">
+                <img id="modal-img" src="" alt="Product" class="max-h-full object-contain rounded-xl mix-blend-multiply">
+            </div>
+            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
+                <div class="text-xs text-brand-blue font-bold tracking-widest uppercase mb-2" id="modal-category">Category</div>
+                <h3 class="text-3xl font-bold mb-4 text-brand-black" id="modal-title">Product Name</h3>
+                <div class="flex text-yellow-400 text-sm mb-6">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <span class="text-brand-gray ml-2 text-xs">(128 Reviews)</span>
+                </div>
+                <p class="text-2xl font-bold mb-6 text-brand-black" id="modal-price">$0.00</p>
+                <p class="text-brand-gray text-sm leading-relaxed mb-8">Premium build quality, engineered for professionals who demand nothing but the absolute best. Features next-gen specs and minimalist architectural design.</p>
+                
+                <button onclick="addToCartFromModal()" class="w-full bg-brand-blue text-white py-4 rounded-full font-bold btn-glow flex items-center justify-center gap-2 shadow-lg shadow-brand-blue/20">
+                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-[-50px] left-1/2 transform -translate-x-1/2 bg-brand-black text-white px-6 py-3.5 rounded-full shadow-xl font-medium text-sm flex items-center gap-3 z-50 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-check-circle text-green-400 text-lg"></i>
+        <span id="toast-msg">Item added to cart!</span>
+    </div>
+
+    <script>
+        // Demo Data Matrix
+        const products = [
+            { id: 1, name: "Neural Wireless Headphones", price: 349.00, category: "Audio", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80" },
+            { id: 2, name: "Chrono Smart Watch Series X", price: 499.00, category: "Wearables", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" },
+            { id: 3, name: "Tactile Gaming Keyboard", price: 189.00, category: "Gaming", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=600&q=80" },
+            { id: 4, name: "Ergo Mechanical Mouse", price: 129.00, category: "Accessories", img: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80" },
+            { id: 5, name: "Acoustic Bluetooth Speaker", price: 259.00, category: "Audio", img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80" },
+            { id: 6, name: "Nomad Premium Backpack", price: 145.00, category: "Lifestyle", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" },
+            { id: 7, name: "Alloy Laptop Stand", price: 89.00, category: "Workspace", img: "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?w=600&q=80" },
+            { id: 8, name: "Aura RGB Desk Lamp", price: 115.00, category: "Home", img: "https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=600&q=80" }
+        ];
+
+        // Render Products
+        const grid = document.getElementById('product-grid');
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = "product-card rounded-3xl p-4 flex flex-col group relative";
+            card.innerHTML = `
+                <div class="relative w-full aspect-square rounded-2xl overflow-hidden mb-6 bg-brand-light cursor-pointer img-zoom-container" onclick="openModal(${product.id})">
+                    <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover img-zoom mix-blend-multiply opacity-90 group-hover:opacity-100">
+                    <button onclick="event.stopPropagation(); toggleWishlist(this)" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 border border-gray-100 backdrop-blur-md flex items-center justify-center hover:bg-red-50 hover:text-white transition-colors z-10 text-brand-gray shadow-sm">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                    <div class="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+                        <span class="bg-white/80 backdrop-blur-md text-brand-black text-xs font-semibold py-2 px-6 rounded-full border border-gray-200 shadow-sm">Quick View</span>
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-brand-blue font-bold">${product.category}</span>
+                            <h3 class="text-base font-semibold mt-1 text-brand-black group-hover:text-brand-blue transition-colors cursor-pointer" onclick="openModal(${product.id})">${product.name}</h3>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 text-xs mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="mt-auto flex items-center justify-between">
+                        <span class="text-lg font-bold text-brand-black">$${product.price.toFixed(2)}</span>
+                        <button onclick="addToCart('${product.name}')" class="w-10 h-10 rounded-full bg-brand-light border border-gray-200 text-brand-black flex items-center justify-center hover:bg-brand-blue hover:text-white hover:border-brand-blue transition-all transform hover:scale-110 shadow-sm">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Cart State Context engine variables
+        let cartCount = 0;
+        let currentModalProduct = null;
+
+        function addToCart(productName) {
+            cartCount++;
+            animateBadge();
+            showToast(<b>${productName}</b> added to cart);
+        }
+
+        function addToCartFromModal() {
+            if(currentModalProduct) {
+                addToCart(currentModalProduct.name);
+                closeModal();
+            }
+        }
+
+        function animateBadge() {
+            const badge = document.getElementById('cart-badge');
+            badge.innerText = cartCount;
+            badge.classList.add('scale-150');
+            setTimeout(() => badge.classList.remove('scale-150'), 200);
+        }
+
+        // Notification Alerts logic configuration context
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerHTML = msg;
+            
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-show');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-show');
+                toast.style.bottom = '-50px';
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Wishlist Matrix Selection
+        function toggleWishlist(btn) {
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('fa-regular')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid', 'text-red-500');
+                btn.classList.remove('text-brand-gray');
+                btn.classList.add('bg-white');
+                showToast("Added to Wishlist");
+            } else {
+                icon.classList.add('fa-regular');
+                icon.classList.remove('fa-solid', 'text-red-500');
+                btn.classList.add('text-brand-gray');
+            }
+        }
+
+        // Modal View State Engines
+        const modal = document.getElementById('quick-view-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function openModal(id) {
+            const product = products.find(p => p.id === id);
+            currentModalProduct = product;
+            
+            document.getElementById('modal-img').src = product.img;
+            document.getElementById('modal-category').innerText = product.category;
+            document.getElementById('modal-title').innerText = product.name;
+            document.getElementById('modal-price').innerText = $${product.price.toFixed(2)};
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // Adaptive Navigation Header Scroll Metrics processing
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.classList.remove('shadow-md');
+                header.style.background = 'rgba(255, 255, 255, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
